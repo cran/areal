@@ -11,6 +11,7 @@ Status](https://ci.appveyor.com/api/projects/status/github/slu-openGIS/areal?bra
 [![Coverage
 status](https://codecov.io/gh/slu-openGIS/areal/branch/master/graph/badge.svg)](https://codecov.io/github/slu-openGIS/areal?branch=master)
 [![DOI](https://zenodo.org/badge/152279647.svg)](https://zenodo.org/badge/latestdoi/152279647)
+[![DOI](http://joss.theoj.org/papers/10.21105/joss.01221/status.svg)](https://doi.org/10.21105/joss.01221)
 [![CRAN\_status\_badge](http://www.r-pkg.org/badges/version/areal)](https://cran.r-project.org/package=areal)
 
 Areal interpolation is the process making estimates from a source set of
@@ -27,13 +28,31 @@ validation and estimation, providing a full-featured workflow that fits
 into both modern data management (e.g. `tidyverse`) and spatial data
 (e.g. `sf`) frameworks.
 
+### *Joural of Open Souce Software* Article
+
+An [article](http://joss.theoj.org/papers/10.21105/joss.01221)
+describing `areal`’s approach to areal weighted interpolation has been
+published in the [*The Journal of Open Source
+Software*](http://joss.theoj.org/). The article includes benchmarking of
+`areal` performance on several data sets. Please [cite the
+paper](/inst/CITATION) if you use `areal` in your work\!
+
+### What is New in v0.1.5?
+
+This version of `areal` contains all of the bug fixes that were
+identified by early adaopters after the initial CRAN submission. Special
+thanks to [Matt Herman](https://github.com/mfherman) and [David
+Blodgett](https://github.com/dblodgett-usgs) for their issues and pull
+requests\! Check out the [NEWS file](/NEWS.md) for details on all of the
+bugs that were identified.
+
 ## Installation
 
 ### Installing Dependencies
 
 You should check the [`sf` package
 website](https://r-spatial.github.io/sf/) and the [`areal` package
-website](https://slu-openGIS.github.io/area/) for the latest details on
+website](https://slu-openGIS.github.io/areal/) for the latest details on
 installing dependencies for that package. Instructions vary
 significantly by operating system. For best results, have `sf` installed
 before you install `areal`. Other dependencies, like `dplyr`, will be
@@ -178,7 +197,7 @@ wards %>%
 #>  8     8  12188.   7604.   3796.   9.82
 #>  9     9  14095.   6786.   6351.  11.8 
 #> 10    10  11239.   8703.   1667.   9.44
-#> # ... with 18 more rows
+#> # … with 18 more rows
 ```
 
 Another advantage of `areal` is that the interpolation process is not a

@@ -140,6 +140,39 @@ aw_interpolate(wards, tid = WARD, source = combinedData, sid = GEOID,
                weight = "sum", output = "tibble", intensive = "ASTHMA",
                extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
 
+## ----constraints---------------------------------------------------------
+# re-load data
+race <- ar_stl_race
+
+# create combined data
+race %>%
+  select(GEOID, WHITE_E, BLACK_E) %>%
+  mutate(
+    TOTAL = WHITE_E+BLACK_E,
+    WHITE_PCT = WHITE_E/TOTAL,
+    BLACK_PCT = BLACK_E/TOTAL,
+    TOTAL_PCT = WHITE_PCT+BLACK_PCT
+  ) -> constrainedData
+
+# interpolate
+result2 <- aw_interpolate(ar_stl_wards, tid = WARD, 
+               source = constrainedData, sid = GEOID, 
+               weight = "sum", output = "tibble", 
+               intensive = c("WHITE_PCT", "BLACK_PCT", "TOTAL_PCT"),
+               extensive = c("TOTAL", "WHITE_E", "BLACK_E"))
+
+# calculate new percentages
+result2 %>%
+  mutate(
+    WHITE_PCT_2 = WHITE_E/TOTAL,
+    BLACK_PCT_2 = BLACK_E/TOTAL,
+    TOTAL_PCT_2 = WHITE_PCT_2+BLACK_PCT_2
+  ) -> result2
+
+# display
+result2 %>%
+  select(WHITE_PCT, WHITE_PCT_2, BLACK_PCT, BLACK_PCT_2, TOTAL_PCT, TOTAL_PCT_2)
+
 ## ----ouput---------------------------------------------------------------
 aw_interpolate(wards, tid = WARD, source = asthma, sid = GEOID, 
                weight = "sum", output = "sf", intensive = "ASTHMA")

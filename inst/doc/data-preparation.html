@@ -12,7 +12,7 @@
 
 <meta name="author" content="Christopher Prener, Ph.D." />
 
-<meta name="date" content="2018-12-20" />
+<meta name="date" content="2019-05-20" />
 
 <title>Preparing Data for Interpolation</title>
 
@@ -291,6 +291,9 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
 
+
+
+
 </head>
 
 <body>
@@ -299,8 +302,8 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 
 <h1 class="title toc-ignore">Preparing Data for Interpolation</h1>
-<h4 class="author"><em>Christopher Prener, Ph.D.</em></h4>
-<h4 class="date"><em>2018-12-20</em></h4>
+<h4 class="author">Christopher Prener, Ph.D.</h4>
+<h4 class="date">2019-05-20</h4>
 
 
 
@@ -347,7 +350,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </div>
 <div id="format-issues" class="section level2">
 <h2>Format Issues</h2>
-<p>Data need to be loaded as <code>sf</code> objects in <code>R</code>. If <code>aw_validate()</code> returns <code>FALSE</code> for the first condition, data are not stored as <code>sf</code> objects:</p>
+<p>Data need to be loaded as <code>sf</code> objects in <code>R</code>. If <code>ar_validate()</code> returns <code>FALSE</code> for the first condition, data are not stored as <code>sf</code> objects:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">ar_validate</span>(<span class="dt">source =</span> asthmaTbl, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="st">&quot;ASTHMA&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;aw&quot;</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; # A tibble: 6 x 2</span></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt;   test                            result</span></a>
