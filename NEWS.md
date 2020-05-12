@@ -1,3 +1,11 @@
+# areal 0.1.6
+
+* Prepare `areal` for upcoming `dplyr` release
+* Address bug with geometry collections that could cause errors in `aw_intersect()`
+* Resolve various warnings during unit tests
+* Change minimum version of R to 3.4
+* Update travis and appveyor builds
+
 # areal 0.1.5
 
 * Add *JOSS* badges to the `README` and `pkgdown` sites

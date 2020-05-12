@@ -1,4 +1,4 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -13,7 +13,7 @@ data(ar_stl_race, package = "areal")
 data(ar_stl_wards, package = "areal")
 data(ar_stl_wardsClipped, package = "areal")
 
-## ----load-data-----------------------------------------------------------
+## ----load-data----------------------------------------------------------------
 library(areal)
 
 # load data into enviornment
@@ -22,10 +22,10 @@ asthma <- ar_stl_asthma             # census tract asthma rate estimates
 wards <- ar_stl_wards               # political boundaries
 wardsClipped <- ar_stl_wardsClipped # political boundaries clipped to river
 
-## ----featureMap, echo=FALSE, out.width = '100%'--------------------------
+## ----featureMap, echo=FALSE, out.width = '100%'-------------------------------
 knitr::include_graphics("../man/figures/featureMap.png")
 
-## ----feature-count-------------------------------------------------------
+## ----feature-count------------------------------------------------------------
 # print number of features in source
 nrow(race)
 
@@ -35,10 +35,10 @@ nrow(wards)
 # create intersect for example purposes
 nrow(suppressWarnings(sf::st_intersection(race, wards)))
 
-## ----intersectMap, echo=FALSE, out.width = '100%'------------------------
+## ----intersectMap, echo=FALSE, out.width = '100%'-----------------------------
 knitr::include_graphics("../man/figures/intersectMap.png")
 
-## ----data-by-hand, echo=FALSE--------------------------------------------
+## ----data-by-hand, echo=FALSE-------------------------------------------------
 as_tibble(
   data.frame(
     GEOID = c(29510101100, 29510101100, 29510101200, 29510101200),
@@ -48,7 +48,7 @@ as_tibble(
 ) %>% 
   knitr::kable(caption = "First Four Rows of Intersected Data")
 
-## ----weight-by-hand, echo=FALSE------------------------------------------
+## ----weight-by-hand, echo=FALSE-----------------------------------------------
 as_tibble(
   data.frame(
     GEOID = c(29510101100, 29510101100, 29510101200, 29510101200),
@@ -61,7 +61,7 @@ as_tibble(
 ) %>% 
   knitr::kable(caption = "First Four Rows of Intersected Data")
 
-## ----calculate-by-hand, echo=FALSE---------------------------------------
+## ----calculate-by-hand, echo=FALSE--------------------------------------------
 as_tibble(
   data.frame(
     GEOID = c(29510101100, 29510101100, 29510101200, 29510101200),
@@ -75,7 +75,7 @@ as_tibble(
 ) %>% 
   knitr::kable(caption = "First Four Rows of Intersected Data")
 
-## ----aggregate-by-hand, echo=FALSE---------------------------------------
+## ----aggregate-by-hand, echo=FALSE--------------------------------------------
 as_tibble(
   data.frame(
     WARD = c(11, 12, 13),
@@ -84,49 +84,49 @@ as_tibble(
 ) %>% 
   knitr::kable(caption = "Resulting Target Data")
 
-## ----extensive-----------------------------------------------------------
+## ----extensive----------------------------------------------------------------
 aw_interpolate(wards, tid = WARD, source = race, sid = GEOID, 
                weight = "sum", output = "tibble", extensive = "TOTAL_E")
 
-## ----extensive-vector----------------------------------------------------
+## ----extensive-vector---------------------------------------------------------
 aw_interpolate(wards, tid = WARD, source = race, sid = GEOID, 
                weight = "sum", output = "tibble", 
                extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
 
-## ----extensive-weights---------------------------------------------------
+## ----extensive-weights--------------------------------------------------------
 aw_preview_weights(wards, tid = WARD, source = race, sid = GEOID, 
                    type = "extensive")
 
-## ----verify-true---------------------------------------------------------
+## ----verify-true--------------------------------------------------------------
 result <- aw_interpolate(wards, tid = WARD, source = race, sid = GEOID, 
                weight = "sum", output = "tibble", extensive = "TOTAL_E")
 
 aw_verify(source = race, sourceValue = TOTAL_E, 
           result = result, resultValue = TOTAL_E)
 
-## ----verify-fail---------------------------------------------------------
+## ----verify-fail--------------------------------------------------------------
 result <- aw_interpolate(wards, tid = WARD, source = race, sid = GEOID, 
                weight = "total", output = "tibble", extensive = "TOTAL_E")
 
 aw_verify(source = race, sourceValue = TOTAL_E, 
           result = result, resultValue = TOTAL_E)
 
-## ----overlapMap, echo=FALSE, out.width = '100%'--------------------------
+## ----overlapMap, echo=FALSE, out.width = '100%'-------------------------------
 knitr::include_graphics("../man/figures/overlapMap.png")
 
-## ----extensive-weights-overlap-------------------------------------------
+## ----extensive-weights-overlap------------------------------------------------
 aw_preview_weights(wardsClipped, tid = WARD, source = race, sid = GEOID, 
                    type = "extensive")
 
-## ----invenstive-weights--------------------------------------------------
+## ----invenstive-weights-------------------------------------------------------
 aw_preview_weights(wards, tid = WARD, source = asthma, sid = GEOID, 
                    type = "intensive")
 
-## ----intensive-----------------------------------------------------------
+## ----intensive----------------------------------------------------------------
 aw_interpolate(wards, tid = WARD, source = asthma, sid = GEOID, 
                weight = "sum", output = "tibble", intensive = "ASTHMA")
 
-## ----mixed---------------------------------------------------------------
+## ----mixed--------------------------------------------------------------------
 # remove sf geometry
 st_geometry(race) <- NULL
 
@@ -140,7 +140,7 @@ aw_interpolate(wards, tid = WARD, source = combinedData, sid = GEOID,
                weight = "sum", output = "tibble", intensive = "ASTHMA",
                extensive = c("TOTAL_E", "WHITE_E", "BLACK_E"))
 
-## ----constraints---------------------------------------------------------
+## ----constraints--------------------------------------------------------------
 # re-load data
 race <- ar_stl_race
 
@@ -173,53 +173,53 @@ result2 %>%
 result2 %>%
   select(WHITE_PCT, WHITE_PCT_2, BLACK_PCT, BLACK_PCT_2, TOTAL_PCT, TOTAL_PCT_2)
 
-## ----ouput---------------------------------------------------------------
+## ----ouput--------------------------------------------------------------------
 aw_interpolate(wards, tid = WARD, source = asthma, sid = GEOID, 
                weight = "sum", output = "sf", intensive = "ASTHMA")
 
-## ----piped-input---------------------------------------------------------
+## ----piped-input--------------------------------------------------------------
 wards %>%
   select(-OBJECTID, -AREA) %>%
   aw_interpolate(tid = WARD, source = asthma, sid = GEOID, 
                  weight = "sum", output = "tibble", intensive = "ASTHMA")
 
-## ----quoted-input--------------------------------------------------------
+## ----quoted-input-------------------------------------------------------------
 wards %>%
   select(-OBJECTID, -AREA) %>%
   aw_interpolate(tid = "WARD", source = asthma, sid = "GEOID", 
                  weight = "sum", output = "tibble", intensive = "ASTHMA")
 
-## ----manual-subset-------------------------------------------------------
+## ----manual-subset------------------------------------------------------------
 race <- select(ar_stl_race, GEOID, TOTAL_E)
 wards <- select(wards, -OBJECTID, -AREA)
 
-## ----aw-intersect--------------------------------------------------------
+## ----aw-intersect-------------------------------------------------------------
 wards %>%
   aw_intersect(source = race, areaVar = "area") -> intersect
 
 intersect
 
-## ----aw-total------------------------------------------------------------
+## ----aw-total-----------------------------------------------------------------
 intersect %>%
   aw_total(source = race, id = GEOID, areaVar = "area", totalVar = "totalArea",
              type = "extensive", weight = "sum") -> intersect
 
 intersect
 
-## ----aw-weight-----------------------------------------------------------
+## ----aw-weight----------------------------------------------------------------
 intersect %>%
   aw_weight(areaVar = "area", totalVar = "totalArea", 
             areaWeight = "areaWeight") -> intersect
 
 intersect
 
-## ----aw-calculate--------------------------------------------------------
+## ----aw-calculate-------------------------------------------------------------
 intersect %>%
   aw_calculate(value = TOTAL_E, areaWeight = "areaWeight") -> intersect
 
 intersect
 
-## ----aw-aggregate--------------------------------------------------------
+## ----aw-aggregate-------------------------------------------------------------
 intersect %>%
   aw_aggregate(target = wards, tid = WARD, interVar = TOTAL_E) -> result
 
