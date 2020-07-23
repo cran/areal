@@ -97,16 +97,14 @@ aw_area <- function(.data, areaVar){
   # nse
   areaVarQN <- rlang::quo_name(rlang::enquo(areaVar))
 
-  # rename geometry column if necessary
-  if (attr(.data, "sf_column") != "geometry"){
-    colName <- attr(.data, "sf_column")
-
-    attr(.data, "sf_column") <- "geometry"
-    .data <- dplyr::rename(.data, "geometry" = colName)
-  }
-
   # calculate area
-  out <- dplyr::mutate(.data, !!areaVarQN := unclass(sf::st_area(geometry)))
+  calculated_area <- unclass(sf::st_area(.data))
+
+  # join
+  out <- cbind(.data, calculated_area)
+
+  # rename
+  out <- dplyr::rename(out, !!areaVarQN := calculated_area)
 
   # return output
   return(out)

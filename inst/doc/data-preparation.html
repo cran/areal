@@ -12,20 +12,23 @@
 
 <meta name="author" content="Christopher Prener, Ph.D." />
 
-<meta name="date" content="2020-05-12" />
+<meta name="date" content="2020-07-23" />
 
 <title>Preparing Data for Interpolation</title>
 
-<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
-// be compatible with the behavior of Pandoc < 2.8).
-document.addEventListener('DOMContentLoaded', function(e) {
-  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
-  var i, h, a;
-  for (i = 0; i < hs.length; i++) {
-    h = hs[i];
-    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
-    a = h.attributes;
-    while (a.length > 0) h.removeAttribute(a[0].name);
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
   }
 });
 </script>
@@ -33,18 +36,19 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -64,7 +68,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -315,7 +319,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Preparing Data for Interpolation</h1>
 <h4 class="author">Christopher Prener, Ph.D.</h4>
-<h4 class="date">2020-05-12</h4>
+<h4 class="date">2020-07-23</h4>
 
 
 
@@ -406,17 +410,24 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb9-2"><a href="#cb9-2"></a><span class="co">#&gt; Coordinate Reference System:</span></span>
 <span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt;   User input: EPSG:4269 </span></span>
 <span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt;   wkt:</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt; GEOGCS[&quot;NAD83&quot;,</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt;     DATUM[&quot;North_American_Datum_1983&quot;,</span></span>
-<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt;         SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt;             AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],</span></span>
-<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt;         TOWGS84[0,0,0,0,0,0,0],</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt;         AUTHORITY[&quot;EPSG&quot;,&quot;6269&quot;]],</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt;     PRIMEM[&quot;Greenwich&quot;,0,</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt;         AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt;     UNIT[&quot;degree&quot;,0.0174532925199433,</span></span>
-<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt;         AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],</span></span>
-<span id="cb9-15"><a href="#cb9-15"></a><span class="co">#&gt;     AUTHORITY[&quot;EPSG&quot;,&quot;4269&quot;]]</span></span></code></pre></div>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt; GEOGCRS[&quot;NAD83&quot;,</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt;     DATUM[&quot;North American Datum 1983&quot;,</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt;         ELLIPSOID[&quot;GRS 1980&quot;,6378137,298.257222101,</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt;             LENGTHUNIT[&quot;metre&quot;,1]]],</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt;     PRIMEM[&quot;Greenwich&quot;,0,</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt;         ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt;     CS[ellipsoidal,2],</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt;         AXIS[&quot;geodetic latitude (Lat)&quot;,north,</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt;             ORDER[1],</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="co">#&gt;         AXIS[&quot;geodetic longitude (Lon)&quot;,east,</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a><span class="co">#&gt;             ORDER[2],</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="co">#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a><span class="co">#&gt;     USAGE[</span></span>
+<span id="cb9-19"><a href="#cb9-19"></a><span class="co">#&gt;         SCOPE[&quot;unknown&quot;],</span></span>
+<span id="cb9-20"><a href="#cb9-20"></a><span class="co">#&gt;         AREA[&quot;North America - NAD83&quot;],</span></span>
+<span id="cb9-21"><a href="#cb9-21"></a><span class="co">#&gt;         BBOX[14.92,167.65,86.46,-47.74]],</span></span>
+<span id="cb9-22"><a href="#cb9-22"></a><span class="co">#&gt;     ID[&quot;EPSG&quot;,4269]]</span></span></code></pre></div>
 <p>The <code>EPSG</code> value <code>4269</code> refers to a specific type of coordinate system known as as geographic coordinate system. These data use latitude-longitude values, which vary in length and thus cannot be used to calculate area (a key component of carrying out areal interpolations). These data would fail the <code>ar_validate()</code> process:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">ar_validate</span>(<span class="dt">source =</span> race83, <span class="dt">target =</span> wards, <span class="dt">varList =</span> <span class="st">&quot;TOTAL_E&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;aw&quot;</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="co">#&gt; # A tibble: 6 x 2</span></span>
@@ -433,29 +444,44 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb11-2"><a href="#cb11-2"></a><span class="co">#&gt; Coordinate Reference System:</span></span>
 <span id="cb11-3"><a href="#cb11-3"></a><span class="co">#&gt;   User input: EPSG:26915 </span></span>
 <span id="cb11-4"><a href="#cb11-4"></a><span class="co">#&gt;   wkt:</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a><span class="co">#&gt; PROJCS[&quot;NAD83 / UTM zone 15N&quot;,</span></span>
-<span id="cb11-6"><a href="#cb11-6"></a><span class="co">#&gt;     GEOGCS[&quot;NAD83&quot;,</span></span>
-<span id="cb11-7"><a href="#cb11-7"></a><span class="co">#&gt;         DATUM[&quot;North_American_Datum_1983&quot;,</span></span>
-<span id="cb11-8"><a href="#cb11-8"></a><span class="co">#&gt;             SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,</span></span>
-<span id="cb11-9"><a href="#cb11-9"></a><span class="co">#&gt;                 AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],</span></span>
-<span id="cb11-10"><a href="#cb11-10"></a><span class="co">#&gt;             TOWGS84[0,0,0,0,0,0,0],</span></span>
-<span id="cb11-11"><a href="#cb11-11"></a><span class="co">#&gt;             AUTHORITY[&quot;EPSG&quot;,&quot;6269&quot;]],</span></span>
-<span id="cb11-12"><a href="#cb11-12"></a><span class="co">#&gt;         PRIMEM[&quot;Greenwich&quot;,0,</span></span>
-<span id="cb11-13"><a href="#cb11-13"></a><span class="co">#&gt;             AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],</span></span>
-<span id="cb11-14"><a href="#cb11-14"></a><span class="co">#&gt;         UNIT[&quot;degree&quot;,0.0174532925199433,</span></span>
-<span id="cb11-15"><a href="#cb11-15"></a><span class="co">#&gt;             AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],</span></span>
-<span id="cb11-16"><a href="#cb11-16"></a><span class="co">#&gt;         AUTHORITY[&quot;EPSG&quot;,&quot;4269&quot;]],</span></span>
-<span id="cb11-17"><a href="#cb11-17"></a><span class="co">#&gt;     PROJECTION[&quot;Transverse_Mercator&quot;],</span></span>
-<span id="cb11-18"><a href="#cb11-18"></a><span class="co">#&gt;     PARAMETER[&quot;latitude_of_origin&quot;,0],</span></span>
-<span id="cb11-19"><a href="#cb11-19"></a><span class="co">#&gt;     PARAMETER[&quot;central_meridian&quot;,-93],</span></span>
-<span id="cb11-20"><a href="#cb11-20"></a><span class="co">#&gt;     PARAMETER[&quot;scale_factor&quot;,0.9996],</span></span>
-<span id="cb11-21"><a href="#cb11-21"></a><span class="co">#&gt;     PARAMETER[&quot;false_easting&quot;,500000],</span></span>
-<span id="cb11-22"><a href="#cb11-22"></a><span class="co">#&gt;     PARAMETER[&quot;false_northing&quot;,0],</span></span>
-<span id="cb11-23"><a href="#cb11-23"></a><span class="co">#&gt;     UNIT[&quot;metre&quot;,1,</span></span>
-<span id="cb11-24"><a href="#cb11-24"></a><span class="co">#&gt;         AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],</span></span>
-<span id="cb11-25"><a href="#cb11-25"></a><span class="co">#&gt;     AXIS[&quot;Easting&quot;,EAST],</span></span>
-<span id="cb11-26"><a href="#cb11-26"></a><span class="co">#&gt;     AXIS[&quot;Northing&quot;,NORTH],</span></span>
-<span id="cb11-27"><a href="#cb11-27"></a><span class="co">#&gt;     AUTHORITY[&quot;EPSG&quot;,&quot;26915&quot;]]</span></span></code></pre></div>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co">#&gt; PROJCRS[&quot;NAD83 / UTM zone 15N&quot;,</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="co">#&gt;     BASEGEOGCRS[&quot;NAD83&quot;,</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="co">#&gt;         DATUM[&quot;North American Datum 1983&quot;,</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="co">#&gt;             ELLIPSOID[&quot;GRS 1980&quot;,6378137,298.257222101,</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="co">#&gt;                 LENGTHUNIT[&quot;metre&quot;,1]]],</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="co">#&gt;         PRIMEM[&quot;Greenwich&quot;,0,</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="co">#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a><span class="co">#&gt;         ID[&quot;EPSG&quot;,4269]],</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a><span class="co">#&gt;     CONVERSION[&quot;UTM zone 15N&quot;,</span></span>
+<span id="cb11-14"><a href="#cb11-14"></a><span class="co">#&gt;         METHOD[&quot;Transverse Mercator&quot;,</span></span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="co">#&gt;             ID[&quot;EPSG&quot;,9807]],</span></span>
+<span id="cb11-16"><a href="#cb11-16"></a><span class="co">#&gt;         PARAMETER[&quot;Latitude of natural origin&quot;,0,</span></span>
+<span id="cb11-17"><a href="#cb11-17"></a><span class="co">#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],</span></span>
+<span id="cb11-18"><a href="#cb11-18"></a><span class="co">#&gt;             ID[&quot;EPSG&quot;,8801]],</span></span>
+<span id="cb11-19"><a href="#cb11-19"></a><span class="co">#&gt;         PARAMETER[&quot;Longitude of natural origin&quot;,-93,</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a><span class="co">#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],</span></span>
+<span id="cb11-21"><a href="#cb11-21"></a><span class="co">#&gt;             ID[&quot;EPSG&quot;,8802]],</span></span>
+<span id="cb11-22"><a href="#cb11-22"></a><span class="co">#&gt;         PARAMETER[&quot;Scale factor at natural origin&quot;,0.9996,</span></span>
+<span id="cb11-23"><a href="#cb11-23"></a><span class="co">#&gt;             SCALEUNIT[&quot;unity&quot;,1],</span></span>
+<span id="cb11-24"><a href="#cb11-24"></a><span class="co">#&gt;             ID[&quot;EPSG&quot;,8805]],</span></span>
+<span id="cb11-25"><a href="#cb11-25"></a><span class="co">#&gt;         PARAMETER[&quot;False easting&quot;,500000,</span></span>
+<span id="cb11-26"><a href="#cb11-26"></a><span class="co">#&gt;             LENGTHUNIT[&quot;metre&quot;,1],</span></span>
+<span id="cb11-27"><a href="#cb11-27"></a><span class="co">#&gt;             ID[&quot;EPSG&quot;,8806]],</span></span>
+<span id="cb11-28"><a href="#cb11-28"></a><span class="co">#&gt;         PARAMETER[&quot;False northing&quot;,0,</span></span>
+<span id="cb11-29"><a href="#cb11-29"></a><span class="co">#&gt;             LENGTHUNIT[&quot;metre&quot;,1],</span></span>
+<span id="cb11-30"><a href="#cb11-30"></a><span class="co">#&gt;             ID[&quot;EPSG&quot;,8807]]],</span></span>
+<span id="cb11-31"><a href="#cb11-31"></a><span class="co">#&gt;     CS[Cartesian,2],</span></span>
+<span id="cb11-32"><a href="#cb11-32"></a><span class="co">#&gt;         AXIS[&quot;(E)&quot;,east,</span></span>
+<span id="cb11-33"><a href="#cb11-33"></a><span class="co">#&gt;             ORDER[1],</span></span>
+<span id="cb11-34"><a href="#cb11-34"></a><span class="co">#&gt;             LENGTHUNIT[&quot;metre&quot;,1]],</span></span>
+<span id="cb11-35"><a href="#cb11-35"></a><span class="co">#&gt;         AXIS[&quot;(N)&quot;,north,</span></span>
+<span id="cb11-36"><a href="#cb11-36"></a><span class="co">#&gt;             ORDER[2],</span></span>
+<span id="cb11-37"><a href="#cb11-37"></a><span class="co">#&gt;             LENGTHUNIT[&quot;metre&quot;,1]],</span></span>
+<span id="cb11-38"><a href="#cb11-38"></a><span class="co">#&gt;     USAGE[</span></span>
+<span id="cb11-39"><a href="#cb11-39"></a><span class="co">#&gt;         SCOPE[&quot;unknown&quot;],</span></span>
+<span id="cb11-40"><a href="#cb11-40"></a><span class="co">#&gt;         AREA[&quot;North America - 96°W to 90°W and NAD83 by country&quot;],</span></span>
+<span id="cb11-41"><a href="#cb11-41"></a><span class="co">#&gt;         BBOX[25.61,-96,84,-90]],</span></span>
+<span id="cb11-42"><a href="#cb11-42"></a><span class="co">#&gt;     ID[&quot;EPSG&quot;,26915]]</span></span></code></pre></div>
 <p>If these data fail that process, <code>st_crs()</code> can be used to identify whether the source or the target (or both) are in an inappropriate coordinate system. The <code>EPSG</code> value <code>26915</code> refers to another type of coordinate system known as as projected coordinate system (or “planar” data). Further, <code>26915</code> is a particular type of projected coordinate system known as the <a href="https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system">Universal Transverse Mercator</a> coordinate system. This is a good option for using <code>areal</code> because it is available around the world. There are a variety of tools for identifying the appropriate UTM zone, including this excellent <a href="https://mangomap.com/robertyoung/maps/69585/what-utm-zone-am-i-in-#">interactive map</a>. Once you have an EPSG zone, the website <a href="https://epsg.io">epsg.io</a> can be used to search for the appropriate <code>EPSG</code> value.</p>
 <p>In this case, the <code>wards</code> data are in an appropriate system but the <code>race</code> data need to be transformed. The <code>st_transform()</code> function can be used to modify them to an appropriate coordinate system:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>raceFixed &lt;-<span class="st"> </span><span class="kw">st_transform</span>(race83, <span class="dt">crs =</span> <span class="dv">26915</span>)</span></code></pre></div>
@@ -491,7 +517,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb15-4"><a href="#cb15-4"></a><span class="co">#&gt; [13] &quot;BLACK_M&quot;   &quot;AIAN_E&quot;    &quot;AIAN_M&quot;    &quot;ASIAN_E&quot;   &quot;ASIAN_M&quot;   &quot;NHPI_E&quot;   </span></span>
 <span id="cb15-5"><a href="#cb15-5"></a><span class="co">#&gt; [19] &quot;NHPI_M&quot;    &quot;OTHER_E&quot;   &quot;OTHER_M&quot;   &quot;TWOPLUS_E&quot; &quot;TWOPLUS_M&quot; &quot;geometry&quot;</span></span></code></pre></div>
 <p>Another common problem is that a variable exists in both our source and target data. For instance, we could add a <code>TOTAL_E</code> variable to our target data:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>wardsVar &lt;-<span class="st"> </span><span class="kw">mutate</span>(wards, <span class="dt">TOTAL_E =</span> <span class="ot">TRUE</span>)</span>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>wardsVar &lt;-<span class="st"> </span><span class="kw">mutate</span>(wards, <span class="dt">TOTAL_E =</span> <span class="kw">seq</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">28</span>))</span>
 <span id="cb16-2"><a href="#cb16-2"></a></span>
 <span id="cb16-3"><a href="#cb16-3"></a><span class="kw">ar_validate</span>(<span class="dt">source =</span> race, <span class="dt">target =</span> wardsVar, <span class="dt">varList =</span> <span class="st">&quot;TOTAL_E&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;aw&quot;</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</span>
 <span id="cb16-4"><a href="#cb16-4"></a><span class="co">#&gt; # A tibble: 6 x 2</span></span>
@@ -516,30 +542,17 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb17-10"><a href="#cb17-10"></a><span class="co">#&gt; 4 Variables Exist in Source       TRUE  </span></span>
 <span id="cb17-11"><a href="#cb17-11"></a><span class="co">#&gt; 5 No Variable Conflicts in Target TRUE  </span></span>
 <span id="cb17-12"><a href="#cb17-12"></a><span class="co">#&gt; 6 Overall Evaluation              TRUE</span></span></code></pre></div>
-<p>Another option would be to rename the column using the <code>rename()</code> function from <code>dplyr</code>:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>wardsFixed &lt;-<span class="st"> </span><span class="kw">rename</span>(wardsVar, <span class="dt">oldTotal =</span> TOTAL_E)</span>
-<span id="cb18-2"><a href="#cb18-2"></a></span>
-<span id="cb18-3"><a href="#cb18-3"></a><span class="kw">ar_validate</span>(<span class="dt">source =</span> race, <span class="dt">target =</span> wardsFixed, <span class="dt">varList =</span> <span class="st">&quot;TOTAL_E&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;aw&quot;</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb18-4"><a href="#cb18-4"></a><span class="co">#&gt; # A tibble: 6 x 2</span></span>
-<span id="cb18-5"><a href="#cb18-5"></a><span class="co">#&gt;   test                            result</span></span>
-<span id="cb18-6"><a href="#cb18-6"></a><span class="co">#&gt;   &lt;chr&gt;                           &lt;lgl&gt; </span></span>
-<span id="cb18-7"><a href="#cb18-7"></a><span class="co">#&gt; 1 sf Objects                      TRUE  </span></span>
-<span id="cb18-8"><a href="#cb18-8"></a><span class="co">#&gt; 2 CRS Match                       TRUE  </span></span>
-<span id="cb18-9"><a href="#cb18-9"></a><span class="co">#&gt; 3 CRS is Planar                   TRUE  </span></span>
-<span id="cb18-10"><a href="#cb18-10"></a><span class="co">#&gt; 4 Variables Exist in Source       TRUE  </span></span>
-<span id="cb18-11"><a href="#cb18-11"></a><span class="co">#&gt; 5 No Variable Conflicts in Target TRUE  </span></span>
-<span id="cb18-12"><a href="#cb18-12"></a><span class="co">#&gt; 6 Overall Evaluation              TRUE</span></span></code></pre></div>
-<p>Either option will work for <code>areal</code>’s purposes.</p>
+<p>Another option would be to rename the column using the <code>rename()</code> function from <code>dplyr</code> or by using another approach for renaming columns. Either option will work for <code>areal</code>’s purposes.</p>
 </div>
 <div id="subsetting" class="section level2">
 <h2>Subsetting</h2>
 <p>One cautionary note when using <code>areal</code> is that the validation process will not check to see if too many variables or observations exist in the data. Cleaning the data ahead of time so that only the relevant observations exist can help improve performance - if you have tract data for an entire state but only need a particular city, everything will go faster if you subset these data using the <code>filter()</code> function from <code>dplyr</code>:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>countyData &lt;-<span class="st"> </span><span class="kw">filter</span>(stateData, COUNTY <span class="op">==</span><span class="st"> </span><span class="dv">510</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>countyData &lt;-<span class="st"> </span><span class="kw">filter</span>(stateData, COUNTY <span class="op">==</span><span class="st"> </span><span class="dv">510</span>)</span></code></pre></div>
 <p>Having too many columns poses an organizational problem more than anything else. We strongly encourage users to limit their interpolated data to only the needed values. For example, the <code>wards</code> data contains an <code>AREA</code> column whose units we don’t know and an <code>OBJECTID</code> column that is an artifact from its creation using an ESRI product:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">names</span>(wards)</span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="co">#&gt; [1] &quot;OBJECTID&quot; &quot;WARD&quot;     &quot;AREA&quot;     &quot;geometry&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">names</span>(wards)</span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="co">#&gt; [1] &quot;OBJECTID&quot; &quot;WARD&quot;     &quot;AREA&quot;     &quot;geometry&quot;</span></span></code></pre></div>
 <p>We can use the <code>select()</code> function from <code>dplyr</code> to remove these before interpolation since we don’t need them:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>wardsSubset &lt;-<span class="st"> </span><span class="kw">select</span>(wards, <span class="op">-</span>OBJECTID, <span class="op">-</span>AREA)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>wardsSubset &lt;-<span class="st"> </span><span class="kw">select</span>(wards, <span class="op">-</span>OBJECTID, <span class="op">-</span>AREA)</span></code></pre></div>
 </div>
 
 

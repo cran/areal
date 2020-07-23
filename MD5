@@ -1,6 +1,6 @@
-408c701a1f17a00a0b5a646d4e13e4d9 *DESCRIPTION
+e50e8d7c5bd33900d06750c25b8ac7ae *DESCRIPTION
 23e6473734c7819616aed5c6a1833609 *NAMESPACE
-a858bb99d2504ab36562d0f819e38326 *NEWS.md
+25e81d4a8697a7729a186f6f7526e311 *NEWS.md
 1825704460b37585945416fb42d7fcbd *R/ar_stl_asthma.R
 eee70b28b9ce2d4a78c9e0abca0e8cbc *R/ar_stl_race.R
 7d32f6beee5dc8058567f47a8674dda1 *R/ar_stl_wards.R
@@ -10,12 +10,12 @@ ab939eec7e764109f2b2241db8c71772 *R/ar_tessellate.R
 ce484e8bb8378894126111327035be61 *R/aw_aggregate.R
 595c0dd063ef97400ef8d8b97d427873 *R/aw_calculate.R
 1d3daca870f6759567704d2ee28b3b73 *R/aw_interpolate.R
-a00bed855afc09a7053680e4ad150649 *R/aw_intersect.R
+953b37c5fd255368c5fb2d3ee26f7a77 *R/aw_intersect.R
 ffcd9f3d4bb856292fd40f89d5e0e775 *R/aw_preview_weights.R
 4acf286976e84c4d28815f99d328eee6 *R/aw_total.R
 2139815c24f8e2664c8f75c1eafb37bc *R/aw_verify.R
 ea1005f75cf75c8d0acd1b6281597112 *R/aw_weight.R
-278d7eaa6f1b4dc408d2bbc7bc7261f8 *README.md
+1a3124cf2e74fa14e88bf3925be7bd71 *README.md
 65a8608423f0224ddaac5c008e027b73 *build/vignette.rds
 f128a5a5e0be4cb44de44375a66008c5 *data/ar_stl_asthma.rda
 4e8f8729976489b5b2c02b5f79f69944 *data/ar_stl_race.rda
@@ -24,13 +24,13 @@ ff0575f6b9a8697d554d586255fc8563 *data/ar_stl_wardsClipped.rda
 9fa8ee2b5cf026edacad303ca5c90f57 *inst/CITATION
 ba11e77d240e750dc49534f2fe120dba *inst/doc/areal-weighted-interpolation.R
 d336fa8d6a113e2d1c24f9aa7acff174 *inst/doc/areal-weighted-interpolation.Rmd
-86118b89edc7fe72ec8b1d08e1686f2f *inst/doc/areal-weighted-interpolation.html
+ed05003b5886def8042bb67253ebccb7 *inst/doc/areal-weighted-interpolation.html
 602dcd057ff602aa006d3f8e8aaec522 *inst/doc/areal.R
 4ad28d9a6d4d616fc984ebdba227c791 *inst/doc/areal.Rmd
-52d46d4b501ffd13609701d4517cd38d *inst/doc/areal.html
-f48664b712b671887e648e63a78deca2 *inst/doc/data-preparation.R
-37b609499503288b8c200f696284bde4 *inst/doc/data-preparation.Rmd
-622710c8f8976cc17d07a8799a127557 *inst/doc/data-preparation.html
+d4df9ad29bc092aedf2ef71033d5a564 *inst/doc/areal.html
+e963196618b51bb5ab1a1d6dd2640c77 *inst/doc/data-preparation.R
+3ba1241aae51486567acbd0fcfd91531 *inst/doc/data-preparation.Rmd
+0299ae6e7e3d89e1df361817144246de *inst/doc/data-preparation.html
 ae3b3df9970b49b6523e608759bc957d *inst/extdata/STL_POLITICS_Wards10.cpg
 5102cca93211919d120c822b542039af *inst/extdata/STL_POLITICS_Wards10.dbf
 a4c87a066099de6e143c0aaf6df8df0d *inst/extdata/STL_POLITICS_Wards10.prj
@@ -76,7 +76,7 @@ ea1b075207659b79c7688d90c61225c2 *man/figures/overlapMap.png
 7cfde36dfae876b3ee66a77a7b988098 *tests/testthat/test_ar_validate.R
 e4da2fc439ea2852de9ff05bac4a4297 *tests/testthat/test_aw_aggregate.R
 2b4ae1e0707d896f9bb9a76f10baf5d5 *tests/testthat/test_aw_calculate.R
-ebd831b4e6cda27882af1be02c2b22bf *tests/testthat/test_aw_interpolate.R
+159bb148309b93c159a193099530667b *tests/testthat/test_aw_interpolate.R
 48cf488fd1ed2d9b3bb091772b9623c6 *tests/testthat/test_aw_intersect.R
 1e4f331d8ba8e3f5a7907025e491adda *tests/testthat/test_aw_preview_weights.R
 2420dbea10c579eee3a43f97fd5dbccb *tests/testthat/test_aw_total.R
@@ -84,4 +84,4 @@ ebd831b4e6cda27882af1be02c2b22bf *tests/testthat/test_aw_interpolate.R
 76e4e8443c162c20e581394638eccf43 *tests/testthat/test_aw_weight.R
 d336fa8d6a113e2d1c24f9aa7acff174 *vignettes/areal-weighted-interpolation.Rmd
 4ad28d9a6d4d616fc984ebdba227c791 *vignettes/areal.Rmd
-37b609499503288b8c200f696284bde4 *vignettes/data-preparation.Rmd
+3ba1241aae51486567acbd0fcfd91531 *vignettes/data-preparation.Rmd

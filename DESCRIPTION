@@ -1,7 +1,7 @@
 Package: areal
 Type: Package
 Title: Areal Weighted Interpolation
-Version: 0.1.6
+Version: 0.1.7
 Authors@R: c(
     person("Christopher", "Prener", , "chris.prener@slu.edu", c("aut", "cre"),
     comment = c(ORCID = "0000-0002-4310-9888")),
@@ -21,14 +21,14 @@ BugReports: https://github.com/slu-openGIS/areal/issues
 Encoding: UTF-8
 LazyData: true
 Imports: dplyr, glue, purrr, rlang, sf
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Suggests: knitr, rmarkdown, testthat, covr
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2020-05-12 11:47:34 UTC; chris
+Packaged: 2020-07-23 16:43:39 UTC; prenercg
 Author: Christopher Prener [aut, cre] (<https://orcid.org/0000-0002-4310-9888>),
   Charlie Revord [aut],
   Branson Fox [aut] (<https://orcid.org/0000-0002-4361-2811>)
 Maintainer: Christopher Prener <chris.prener@slu.edu>
 Repository: CRAN
-Date/Publication: 2020-05-12 12:10:02 UTC
+Date/Publication: 2020-07-23 17:10:02 UTC

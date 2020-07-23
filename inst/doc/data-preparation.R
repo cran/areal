@@ -62,17 +62,12 @@ ar_validate(source = race, target = wards, varList = "TOTAL", method = "aw", ver
 names(race)
 
 ## -----------------------------------------------------------------------------
-wardsVar <- mutate(wards, TOTAL_E = TRUE)
+wardsVar <- mutate(wards, TOTAL_E = seq(1:28))
 
 ar_validate(source = race, target = wardsVar, varList = "TOTAL_E", method = "aw", verbose = TRUE)
 
 ## -----------------------------------------------------------------------------
 wardsFixed <- select(wardsVar, -TOTAL_E)
-
-ar_validate(source = race, target = wardsFixed, varList = "TOTAL_E", method = "aw", verbose = TRUE)
-
-## -----------------------------------------------------------------------------
-wardsFixed <- rename(wardsVar, oldTotal = TOTAL_E)
 
 ar_validate(source = race, target = wardsFixed, varList = "TOTAL_E", method = "aw", verbose = TRUE)
 

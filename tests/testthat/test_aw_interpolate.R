@@ -140,17 +140,13 @@ test_that("correctly specified functions execute without error", {
                               intensive = c("ASTHMA", "ASTHMA2")), NA)
 })
 
-# rename geometry column
-ar_stl_race %>%
-  dplyr::rename("geom" = "geometry") -> ar_stl_race2
+race_geom <- dplyr::rename(ar_stl_race, geom = geometry)
 
-# return geometry attributes
-attr(ar_stl_race2, "sf_column") <- "geom"
-
-test_that("geom column is correctly renamed during interpolation", {
-  expect_error(aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race2, sid = GEOID,
-                              weight = "sum", output = "sf", extensive = c("TOTAL_E")), NA)
+test_that("correctly specified functions execute without error", {
+  expect_error(aw_interpolate(ar_stl_wards, tid = WARD, source = race_geom, sid = GEOID,
+                              weight = "sum", output = "sf", extensive = c("TOTAL_E", "WHITE_E", "BLACK_E")), NA)
 })
+
 
 # test for matching sid and tid ------------------------------------------------
 

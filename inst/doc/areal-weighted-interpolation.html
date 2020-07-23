@@ -12,20 +12,23 @@
 
 <meta name="author" content="Christopher Prener, Ph.D." />
 
-<meta name="date" content="2020-05-12" />
+<meta name="date" content="2020-07-23" />
 
 <title>Areal Weighted Interpolation</title>
 
-<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
-// be compatible with the behavior of Pandoc < 2.8).
-document.addEventListener('DOMContentLoaded', function(e) {
-  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
-  var i, h, a;
-  for (i = 0; i < hs.length; i++) {
-    h = hs[i];
-    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
-    a = h.attributes;
-    while (a.length > 0) h.removeAttribute(a[0].name);
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
   }
 });
 </script>
@@ -33,18 +36,19 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -64,7 +68,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -315,7 +319,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Areal Weighted Interpolation</h1>
 <h4 class="author">Christopher Prener, Ph.D.</h4>
-<h4 class="date">2020-05-12</h4>
+<h4 class="date">2020-07-23</h4>
 
 
 
@@ -783,7 +787,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb13-4"><a href="#cb13-4"></a><span class="co">#&gt; geometry type:  POLYGON</span></span>
 <span id="cb13-5"><a href="#cb13-5"></a><span class="co">#&gt; dimension:      XY</span></span>
 <span id="cb13-6"><a href="#cb13-6"></a><span class="co">#&gt; bbox:           xmin: 733361.8 ymin: 4268336 xmax: 746157.7 ymax: 4295504</span></span>
-<span id="cb13-7"><a href="#cb13-7"></a><span class="co">#&gt; CRS:            EPSG:26915</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="co">#&gt; projected CRS:  NAD83 / UTM zone 15N</span></span>
 <span id="cb13-8"><a href="#cb13-8"></a><span class="co">#&gt; First 10 features:</span></span>
 <span id="cb13-9"><a href="#cb13-9"></a><span class="co">#&gt;    OBJECTID WARD      AREA    ASTHMA                       geometry</span></span>
 <span id="cb13-10"><a href="#cb13-10"></a><span class="co">#&gt; 1         1    1  46138761 13.379577 POLYGON ((740184.2 4286431,...</span></span>
@@ -857,19 +861,19 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb17-6"><a href="#cb17-6"></a><span class="co">#&gt; geometry type:  GEOMETRY</span></span>
 <span id="cb17-7"><a href="#cb17-7"></a><span class="co">#&gt; dimension:      XY</span></span>
 <span id="cb17-8"><a href="#cb17-8"></a><span class="co">#&gt; bbox:           xmin: 733361.8 ymin: 4268411 xmax: 746155.7 ymax: 4295504</span></span>
-<span id="cb17-9"><a href="#cb17-9"></a><span class="co">#&gt; CRS:            EPSG:26915</span></span>
+<span id="cb17-9"><a href="#cb17-9"></a><span class="co">#&gt; projected CRS:  NAD83 / UTM zone 15N</span></span>
 <span id="cb17-10"><a href="#cb17-10"></a><span class="co">#&gt; First 10 features:</span></span>
-<span id="cb17-11"><a href="#cb17-11"></a><span class="co">#&gt;          GEOID TOTAL_E WARD                       geometry         area</span></span>
-<span id="cb17-12"><a href="#cb17-12"></a><span class="co">#&gt; 1  29510106500    2863    1 POLYGON ((738110.9 4283989,... 4.271176e+05</span></span>
-<span id="cb17-13"><a href="#cb17-13"></a><span class="co">#&gt; 2  29510106700    3168    1 POLYGON ((738335.2 4283055,... 5.946820e+05</span></span>
-<span id="cb17-14"><a href="#cb17-14"></a><span class="co">#&gt; 3  29510107500    1991    1 POLYGON ((740111.6 4286547,... 6.146361e+05</span></span>
-<span id="cb17-15"><a href="#cb17-15"></a><span class="co">#&gt; 4  29510107600    1958    1 POLYGON ((739386.1 4285082,... 1.071347e+06</span></span>
-<span id="cb17-16"><a href="#cb17-16"></a><span class="co">#&gt; 5  29510110100    2820    1 POLYGON ((739542.5 4283728,... 5.563665e+01</span></span>
-<span id="cb17-17"><a href="#cb17-17"></a><span class="co">#&gt; 6  29510109600    3050    1 POLYGON ((740899.6 4285240,... 3.586828e+03</span></span>
-<span id="cb17-18"><a href="#cb17-18"></a><span class="co">#&gt; 7  29510126900    4462    1 POLYGON ((739115.9 4285807,... 8.903340e+05</span></span>
-<span id="cb17-19"><a href="#cb17-19"></a><span class="co">#&gt; 8  29510127000    1826    1 MULTIPOLYGON (((740936.1 42... 1.015451e+03</span></span>
-<span id="cb17-20"><a href="#cb17-20"></a><span class="co">#&gt; 9  29510106400    1986    1 POLYGON ((738500.9 4284750,... 6.866924e+05</span></span>
-<span id="cb17-21"><a href="#cb17-21"></a><span class="co">#&gt; 10 29510108100    3309    1 POLYGON ((740163.9 4286467,... 1.198667e+02</span></span></code></pre></div>
+<span id="cb17-11"><a href="#cb17-11"></a><span class="co">#&gt;           GEOID TOTAL_E WARD         area                       geometry</span></span>
+<span id="cb17-12"><a href="#cb17-12"></a><span class="co">#&gt; 15  29510106500    2863    1 4.271176e+05 POLYGON ((738110.9 4283989,...</span></span>
+<span id="cb17-13"><a href="#cb17-13"></a><span class="co">#&gt; 19  29510106700    3168    1 5.946820e+05 POLYGON ((738335.2 4283055,...</span></span>
+<span id="cb17-14"><a href="#cb17-14"></a><span class="co">#&gt; 21  29510107500    1991    1 6.146361e+05 POLYGON ((740111.6 4286547,...</span></span>
+<span id="cb17-15"><a href="#cb17-15"></a><span class="co">#&gt; 22  29510107600    1958    1 1.071347e+06 POLYGON ((739386.1 4285082,...</span></span>
+<span id="cb17-16"><a href="#cb17-16"></a><span class="co">#&gt; 40  29510110100    2820    1 5.563665e+01 POLYGON ((739542.5 4283728,...</span></span>
+<span id="cb17-17"><a href="#cb17-17"></a><span class="co">#&gt; 62  29510109600    3050    1 3.586828e+03 POLYGON ((740899.6 4285240,...</span></span>
+<span id="cb17-18"><a href="#cb17-18"></a><span class="co">#&gt; 68  29510126900    4462    1 8.903340e+05 POLYGON ((739115.9 4285807,...</span></span>
+<span id="cb17-19"><a href="#cb17-19"></a><span class="co">#&gt; 69  29510127000    1826    1 1.015451e+03 MULTIPOLYGON (((740936.1 42...</span></span>
+<span id="cb17-20"><a href="#cb17-20"></a><span class="co">#&gt; 83  29510106400    1986    1 6.866924e+05 POLYGON ((738500.9 4284750,...</span></span>
+<span id="cb17-21"><a href="#cb17-21"></a><span class="co">#&gt; 103 29510108100    3309    1 1.198667e+02 POLYGON ((740163.9 4286467,...</span></span></code></pre></div>
 <p>Note that <code>aw_intersect()</code> automatically calculates the area of the intersected feature.</p>
 </div>
 <div id="calculate-total-area" class="section level3">
@@ -884,7 +888,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb18-7"><a href="#cb18-7"></a><span class="co">#&gt; geometry type:  GEOMETRY</span></span>
 <span id="cb18-8"><a href="#cb18-8"></a><span class="co">#&gt; dimension:      XY</span></span>
 <span id="cb18-9"><a href="#cb18-9"></a><span class="co">#&gt; bbox:           xmin: 733361.8 ymin: 4268411 xmax: 746155.7 ymax: 4295504</span></span>
-<span id="cb18-10"><a href="#cb18-10"></a><span class="co">#&gt; CRS:            EPSG:26915</span></span>
+<span id="cb18-10"><a href="#cb18-10"></a><span class="co">#&gt; projected CRS:  NAD83 / UTM zone 15N</span></span>
 <span id="cb18-11"><a href="#cb18-11"></a><span class="co">#&gt; First 10 features:</span></span>
 <span id="cb18-12"><a href="#cb18-12"></a><span class="co">#&gt;          GEOID TOTAL_E WARD         area  totalArea</span></span>
 <span id="cb18-13"><a href="#cb18-13"></a><span class="co">#&gt; 1  29510106500    2863    1 4.271176e+05  1064776.2</span></span>
@@ -922,7 +926,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb19-7"><a href="#cb19-7"></a><span class="co">#&gt; geometry type:  GEOMETRY</span></span>
 <span id="cb19-8"><a href="#cb19-8"></a><span class="co">#&gt; dimension:      XY</span></span>
 <span id="cb19-9"><a href="#cb19-9"></a><span class="co">#&gt; bbox:           xmin: 733361.8 ymin: 4268411 xmax: 746155.7 ymax: 4295504</span></span>
-<span id="cb19-10"><a href="#cb19-10"></a><span class="co">#&gt; CRS:            EPSG:26915</span></span>
+<span id="cb19-10"><a href="#cb19-10"></a><span class="co">#&gt; projected CRS:  NAD83 / UTM zone 15N</span></span>
 <span id="cb19-11"><a href="#cb19-11"></a><span class="co">#&gt; First 10 features:</span></span>
 <span id="cb19-12"><a href="#cb19-12"></a><span class="co">#&gt;          GEOID TOTAL_E WARD         area  totalArea</span></span>
 <span id="cb19-13"><a href="#cb19-13"></a><span class="co">#&gt; 1  29510106500    2863    1 4.271176e+05  1064776.2</span></span>
@@ -958,7 +962,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb20-6"><a href="#cb20-6"></a><span class="co">#&gt; geometry type:  GEOMETRY</span></span>
 <span id="cb20-7"><a href="#cb20-7"></a><span class="co">#&gt; dimension:      XY</span></span>
 <span id="cb20-8"><a href="#cb20-8"></a><span class="co">#&gt; bbox:           xmin: 733361.8 ymin: 4268411 xmax: 746155.7 ymax: 4295504</span></span>
-<span id="cb20-9"><a href="#cb20-9"></a><span class="co">#&gt; CRS:            EPSG:26915</span></span>
+<span id="cb20-9"><a href="#cb20-9"></a><span class="co">#&gt; projected CRS:  NAD83 / UTM zone 15N</span></span>
 <span id="cb20-10"><a href="#cb20-10"></a><span class="co">#&gt; First 10 features:</span></span>
 <span id="cb20-11"><a href="#cb20-11"></a><span class="co">#&gt;          GEOID      TOTAL_E WARD         area  totalArea</span></span>
 <span id="cb20-12"><a href="#cb20-12"></a><span class="co">#&gt; 1  29510106500 1148.4457826    1 4.271176e+05  1064776.2</span></span>
@@ -995,7 +999,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb21-6"><a href="#cb21-6"></a><span class="co">#&gt; geometry type:  POLYGON</span></span>
 <span id="cb21-7"><a href="#cb21-7"></a><span class="co">#&gt; dimension:      XY</span></span>
 <span id="cb21-8"><a href="#cb21-8"></a><span class="co">#&gt; bbox:           xmin: 733361.8 ymin: 4268336 xmax: 746157.7 ymax: 4295504</span></span>
-<span id="cb21-9"><a href="#cb21-9"></a><span class="co">#&gt; CRS:            EPSG:26915</span></span>
+<span id="cb21-9"><a href="#cb21-9"></a><span class="co">#&gt; projected CRS:  NAD83 / UTM zone 15N</span></span>
 <span id="cb21-10"><a href="#cb21-10"></a><span class="co">#&gt; First 10 features:</span></span>
 <span id="cb21-11"><a href="#cb21-11"></a><span class="co">#&gt;    WARD   TOTAL_E                       geometry</span></span>
 <span id="cb21-12"><a href="#cb21-12"></a><span class="co">#&gt; 1     1  7991.565 POLYGON ((740184.2 4286431,...</span></span>
