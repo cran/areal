@@ -1,8 +1,8 @@
 # Create spatial data for examples and testing
 
 library(dplyr)
+library(readr)
 library(sf)
-library(stldata)
 library(tidycensus)
 library(tigris)
 library(usethis)
@@ -23,23 +23,24 @@ tracts(state = 29, county = 510, class = "sf") %>%
   select(GEOID, STATEFP, COUNTYFP, TRACTCE, NAMELSAD, ALAND, AWATER) -> stlTracts
 
 left_join(stlTracts, stlRace, by = "GEOID") %>%
-  st_transform(crs = 26915) -> ar_stl_race
+  st_transform(crs = "ESRI:102296") -> ar_stl_race
 
 st_read("inst/extdata/STL_POLITICS_Wards10.shp", stringsAsFactors = FALSE) %>%
   select(-Shape_Leng) %>%
   rename(AREA = Shape_Area,
          WARD = WARD10) %>%
-  st_transform(crs = 26915) -> ar_stl_wards
+  st_transform(crs = "ESRI:102296") -> ar_stl_wards
 
-stl_tbl_asthma %>%
-  rename(GEOID = geoID, ASTHMA = pctAsthma) %>%
+read_csv("inst/extdata/STL_HEALTH_Asthma.csv") %>%
+  mutate(GEOID = as.character(geoID)) %>%
+  rename(ASTHMA = pctAsthma) %>%
   select(GEOID, ASTHMA) %>%
-  left_join(aw_stl_race, ., by = "GEOID") %>%
+  left_join(ar_stl_race, ., by = "GEOID") %>%
   select(GEOID, STATEFP, COUNTYFP, TRACTCE, NAMELSAD, ALAND, AWATER, ASTHMA) -> ar_stl_asthma
 
 st_read("inst/extdata/STL_POLITICS_WardsClipped.shp", stringsAsFactors = FALSE) %>%
   select(-OBJECTID) %>%
-  st_transform(crs = 26915) -> ar_stl_wardsClipped
+  st_transform(crs = "ESRI:102296") -> ar_stl_wardsClipped
 
 use_data(ar_stl_race, overwrite = TRUE)
 use_data(ar_stl_wards, overwrite = TRUE)
@@ -47,3 +48,8 @@ use_data(ar_stl_wardsClipped, overwrite = TRUE)
 use_data(ar_stl_asthma, overwrite = TRUE)
 
 rm(stlRace, stlTracts, ar_stl_race, ar_stl_wards, ar_stl_asthma, ar_stl_wardsClipped)
+
+totalCompare1 <- aw_interpolate(ar_stl_wards, tid = WARD, source = ar_stl_race, sid = GEOID,
+                               weight = "sum", output = "sf", extensive = "TOTAL_E")
+
+save(totalCompare1, file = "inst/testdata/totalCompare1.rda", version = 2)
